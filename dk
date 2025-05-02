@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+set -o errexit
+set -o pipefail
+
+source .env
+
+function npm() {
+    docker compose run --rm server npm ${@}
+}
+
+function yarn() {
+    docker compose run --rm server yarn ${@}
+}
+
+function test() {
+    docker compose run --rm server npm run test:e2e ${@}
+}
+
+function node() {
+    docker compose run --rm server node ${@}
+}
+
+function typeorm() {
+    docker compose run --rm server npm run typeorm ${@}
+}
+
+function bash() {
+    docker compose run --rm server bash ${@}
+}
+
+if declare -F ${1} &>/dev/null; then
+    ${1} "${@:2}"
+else 
+    docker compose ${@}
+fi
