@@ -1,6 +1,6 @@
 # DK
 
-dk is a simple shell script to run docker commands.
+dk is a simple shell script to run docker commands (**D**oc**K**er).
 
 commands are run in the context of the docker container, so you don't have to worry about installing anything on your machine or configuring network.
 
