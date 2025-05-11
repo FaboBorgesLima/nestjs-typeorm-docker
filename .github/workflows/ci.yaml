@@ -1,0 +1,74 @@
+name: Continous Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: ./dk npm install
+
+      - name: Start services
+        run: ./dk up -d
+
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for services to be ready..."
+          sleep 30
+
+      - name: Run tests
+        run: ./dk npm run test
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: ./dk npm install
+
+      - name: Run lint
+        run: ./dk npm run lint
+  e2e:
+    name: E2E
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: ./dk npm install
+
+      - name: Start services
+        run: ./dk up -d
+
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for services to be ready..."
+          sleep 30
+
+      - name: Run e2e tests
+        run: ./dk test
