@@ -13,7 +13,7 @@ services:
   db:
     image: mysql:5.7
     ports:
-      - "${DB_PORT}:3306"
+      - "${DB_EXTERNAL_PORT}:${DB_PORT}"
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}

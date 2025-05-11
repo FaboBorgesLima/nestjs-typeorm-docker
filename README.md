@@ -31,7 +31,13 @@ cd nestjs-typeorm-docker
 cp .env.example .env
 ```
 
-4. Run the Docker containers
+4. Install dependencies
+
+```bash
+./dk npm install
+```
+
+5. Run the Docker containers
 
 ```bash
 ./dk up
